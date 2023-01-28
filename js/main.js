@@ -1,6 +1,10 @@
+//  Created by: https://github.com/giran03
+//  Additional
+//  Description
+
+// PUT IMPORT STATEMENTS HERE:
 import * as THREE from './three.module.js';
 import { OrbitControls } from './OrbitControls.js';
-import { RectAreaLightHelper } from './RectAreaLightHelper.js';
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera( 80, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -13,17 +17,18 @@ document.body.appendChild( renderer.domElement );
 
 // ⚙️ S E T T I N G S ⚙️
 let wireframeStatus = false; // set to 'true' to enable wireframe. 'true'|'false'
-let enableGridHelper = false; // set to 'true' to enable grid helper. 'true'|'false'
+let enableGridHelper = true; // set to 'true' to enable grid helper. 'true'|'false'
 let enableLightHelper = false; // set to 'true' to enable light helper. 'true'|'false'
 let enableTextures = true; // set to 'true' to enable textures. 'true'|'false'
 
 // 🕶️ S H D A D O W S 🕶️
 renderer.shadowMap.enabled = true; // set to 'true' to enable shadows. 'true'|'false'
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    // add "mesh.castShadow = "true" or mesh.receiveShadow = "true" "
+    // to enable shadow for that mesh
 
 // 📝 V A R I A B L E S 📝
 let rotateNinetyDeg = Math.PI*0.5; // used for 90 degrees rotation.
-
 
 // 🕳️ T E X T U R E S 🕳️
 if (enableTextures == true)
@@ -31,8 +36,17 @@ if (enableTextures == true)
     // Insert Code
 }
 
-// 💡 L I G H T S 💡
+// 🫧 START 🫧
 
+const boxGeometry = new THREE.BoxGeometry(1,1,1);
+const boxMaterial = new THREE.MeshNormalMaterial({
+    // properties
+    wireframe: wireframeStatus
+});
+const boxMesh = new THREE.Mesh(boxGeometry,boxMaterial);
+scene.add(boxMesh);
+
+// 🫧 END 🫧
 
 // 🕶️⚙️ S H A D O W  P R O P E R T I E S ⚙️🕶️
 // change light to desired light
@@ -51,9 +65,9 @@ if (enableLightHelper == true)
 
 // 📷 C A M E R A  P O S I T I O N  &  L O O K  A T 📷
 // update values on desired cords
-// camera.position.set( 0,0,0 );
-// camera.lookAt(0, 0, 0);
-// controls.update();
+camera.position.set( 0,0,5 );
+camera.lookAt(0, 0, 0);
+controls.update();
 
 function animate() {
 	requestAnimationFrame( animate );
